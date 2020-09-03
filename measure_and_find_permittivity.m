@@ -1,4 +1,8 @@
 
+catalogue{1,1} = xlsread('honeycombEpsilon_wallPermittivity1_wallThickness1mm.xlsx');
+catalogue{1,2} = xlsread('honeycombEpsilon_wallPermittivity1_wallThickness1.5mm.xlsx');
+catalogue{1,3} = xlsread('honeycombEpsilon_wallPermittivity1_wallThickness2mm.xlsx');
+catalogue{1,4} = xlsread('honeycombEpsilon_wallPermittivity1_wallThickness3mm.xlsx');
 catalogue{2,1} = xlsread('honeycombEpsilon_wallPermittivity2_wallThickness1mm.xlsx');
 catalogue{2,2} = xlsread('honeycombEpsilon_wallPermittivity2_wallThickness1.5mm.xlsx');
 catalogue{2,3} = xlsread('honeycombEpsilon_wallPermittivity2_wallThickness2mm.xlsx');
@@ -33,11 +37,10 @@ catalogue{9,3} = xlsread('honeycombEpsilon_wallPermittivity9_wallThickness2mm.xl
 catalogue{9,4} = xlsread('honeycombEpsilon_wallPermittivity9_wallThickness3mm.xlsx');
 
 
-
 liquidPermittivity = 50;
-materialPermittivity = 3;
-sideLength = 2.5;
+materialPermittivity = 1;
 wallThickness = 3;
+sideLength = 2.5;
 
 
 for j = 1:4
@@ -49,8 +52,7 @@ for j = 1:4
         liquidIndex = catalogue{materialPermittivity,j}(:,1) == ones( length(catalogue{materialPermittivity,j}(:,1)) , 1) * liquidPermittivity;
         liquidIndex = find(liquidIndex==1);  
         catalogue{materialPermittivity,j}(1,1) = catalogueWallThickness;      
-        catalogue{materialPermittivity,j}(liquidIndex,sideLengthIndex)
+        effectivePermittivity = catalogue{materialPermittivity,j}(liquidIndex,sideLengthIndex);
     end
 end
-
-
+fprintf( "Effective permittivity is: %.4f F/m \n ", effectivePermittivity );
